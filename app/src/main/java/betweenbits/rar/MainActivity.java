@@ -1,27 +1,15 @@
 package betweenbits.rar;
 
-import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
+import android.app.ListActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends ActionBarActivity {
-
-    private static final int READ_REQUEST_CODE = 42;
-
+public class MainActivity extends ListActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-
-        intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.setType("image/*");
-
-        startActivityForResult(intent, READ_REQUEST_CODE);
     }
 
     @Override
