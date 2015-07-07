@@ -4,6 +4,10 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
+
+import java.io.File;
+import java.util.ArrayList;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -12,6 +16,23 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ArrayList<Item> lista = new ArrayList<Item>();
+
+        File f = new File("/");
+        File[] files = f.listFiles();
+
+        for(int i=0; i < files.length; i++) {
+            File file = files[i];
+
+            Item item = new Item();
+            item.setTitulo(file.getPath());
+            item.setDataModificacao(file.getName());
+
+            lista.add(item);
+        }
+
+        ListView listView = (ListView) findViewById(R.id.listView);
+        listView.setAdapter(new CustomAdapter(this, lista));
     }
 
     @Override

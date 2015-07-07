@@ -1,9 +1,11 @@
 package betweenbits.rar;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -37,6 +39,18 @@ public class CustomAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        return null;
+
+        Item item = lista.get(position);
+
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View layout = inflater.inflate(R.layout.row, null);
+
+        TextView textTitle = (TextView) layout.findViewById(R.id.textTitleFolder);
+        textTitle.setText(item.getTitulo());
+
+        TextView textDateModify = (TextView) layout.findViewById(R.id.textDateModify);
+        textDateModify.setText(item.getDataModificacao());
+
+        return layout;
     }
 }
