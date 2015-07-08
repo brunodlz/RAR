@@ -18,14 +18,18 @@ public class MainActivity extends ActionBarActivity {
 
         ArrayList<Item> lista = new ArrayList<Item>();
 
-        File f = new File("/");
+        File f = new File("/sdcard/");
         File[] files = f.listFiles();
 
         for(int i=0; i < files.length; i++) {
             File file = files[i];
 
+            String title = file.getPath();
+            int last = title.lastIndexOf("/");
+            int size = title.length();
+
             Item item = new Item();
-            item.setTitulo(file.getPath());
+            item.setTitulo(title.substring(last+1,size));
             item.setDataModificacao(file.getName());
 
             lista.add(item);
