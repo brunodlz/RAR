@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends ActionBarActivity {
 
-    private File file = null;
+    private File parentDir = null;
     private File[] listOfDir = null;
 
     private ListView listView = null;
@@ -33,8 +33,8 @@ public class MainActivity extends ActionBarActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                File file = listOfDir[position];
-                dir = file.getPath();
+                String[] fileNames = parentDir.list();
+                dir = parentDir.getPath() + "/" + fileNames[position];
                 loadingList();
             }
         });
@@ -55,29 +55,26 @@ public class MainActivity extends ActionBarActivity {
         textDir = (TextView) findViewById(R.id.textDir);
     }
 
-    private ArrayList<Item> getDir(String dir) {
-        ArrayList<Item> list = new ArrayList<Item>();
+    private ArrayList<Item> getDir(String pathToParentDir) {
+        ArrayList<Item> inFiles = new ArrayList<Item>();
 
-        file = new File(dir);
-        listOfDir = file.listFiles();
+        parentDir = new File(dir);
+        String[] fileNames = parentDir.list();
 
-        if (listOfDir.length > 0) {
-            for(int i=0; i < listOfDir.length; i++) {
-                File file = listOfDir[i];
+        for (String fileName : fileNames) {
 
-                String title = file.getPath();
-                int last = title.lastIndexOf("/");
-                int size = title.length();
+            Item item = new Item();
+            File file = new File(parentDir.getPath() + "/" + fileName);
 
-                Item item = new Item();
-                item.setTitulo(title.substring(last+1,size));
-                item.setDataModificacao(file.getName());
-
-                list.add(item);
+            if (file.isDirectory()) {
+                item.setTitulo(fileName);
+            } else {
+                item.setTitulo(fileName);
             }
+            inFiles.add(item);
         }
 
-        return list;
+        return inFiles;
     }
 
     @Override
@@ -96,5 +93,12 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+
     }
 }
