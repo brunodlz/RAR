@@ -4,12 +4,21 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.io.File;
 import java.util.ArrayList;
 
 public class MainActivity extends ActionBarActivity {
+
+    private File file = null;
+    private File[] listOfDir = null;
+
+    private ListView listView = null;
+    private TextView textDir = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,11 +27,11 @@ public class MainActivity extends ActionBarActivity {
 
         ArrayList<Item> lista = new ArrayList<Item>();
 
-        File f = new File("/sdcard/");
-        File[] files = f.listFiles();
+        file = new File("/sdcard/");
+        listOfDir = file.listFiles();
 
-        for(int i=0; i < files.length; i++) {
-            File file = files[i];
+        for(int i=0; i < listOfDir.length; i++) {
+            File file = listOfDir[i];
 
             String title = file.getPath();
             int last = title.lastIndexOf("/");
@@ -35,8 +44,17 @@ public class MainActivity extends ActionBarActivity {
             lista.add(item);
         }
 
-        ListView listView = (ListView) findViewById(R.id.listView);
+        listView = (ListView) findViewById(R.id.listView);
         listView.setAdapter(new CustomAdapter(this, lista));
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
+
+        textDir = (TextView) findViewById(R.id.textDir);
+        textDir.setText("/sdcard/");
     }
 
     @Override
