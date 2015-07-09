@@ -20,41 +20,64 @@ public class MainActivity extends ActionBarActivity {
     private ListView listView = null;
     private TextView textDir = null;
 
+    private String dir = "/sdcard/";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ArrayList<Item> lista = new ArrayList<Item>();
+        initializeViews();
+        loadingList();
 
-        file = new File("/sdcard/");
-        listOfDir = file.listFiles();
-
-        for(int i=0; i < listOfDir.length; i++) {
-            File file = listOfDir[i];
-
-            String title = file.getPath();
-            int last = title.lastIndexOf("/");
-            int size = title.length();
-
-            Item item = new Item();
-            item.setTitulo(title.substring(last+1,size));
-            item.setDataModificacao(file.getName());
-
-            lista.add(item);
-        }
-
-        listView = (ListView) findViewById(R.id.listView);
-        listView.setAdapter(new CustomAdapter(this, lista));
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                File file = listOfDir[position];
+                dir = file.getPath();
+                loadingList();
             }
         });
+    }
 
+    private void loadingList() {
+        ArrayList<Item> list = getDir(dir);
+        setListView(list, dir);
+    }
+
+    private void setListView(ArrayList<Item> list, String dir) {
+        listView.setAdapter(new CustomAdapter(this, list));
+        textDir.setText(dir);
+    }
+
+    private void initializeViews() {
+        listView = (ListView) findViewById(R.id.listView);
         textDir = (TextView) findViewById(R.id.textDir);
-        textDir.setText("/sdcard/");
+    }
+
+    private ArrayList<Item> getDir(String dir) {
+        ArrayList<Item> list = new ArrayList<Item>();
+
+        file = new File(dir);
+        listOfDir = file.listFiles();
+
+        if (listOfDir.length > 0) {
+            for(int i=0; i < listOfDir.length; i++) {
+                File file = listOfDir[i];
+
+                String title = file.getPath();
+                int last = title.lastIndexOf("/");
+                int size = title.length();
+
+                Item item = new Item();
+                item.setTitulo(title.substring(last+1,size));
+                item.setDataModificacao(file.getName());
+
+                list.add(item);
+            }
+        }
+
+        return list;
     }
 
     @Override
