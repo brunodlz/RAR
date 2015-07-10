@@ -43,6 +43,7 @@ public class MainActivity extends ActionBarActivity {
     private void loadingList() {
         ArrayList<Item> list = getDir(dir);
         setListView(list, dir);
+
     }
 
     private void setListView(ArrayList<Item> list, String dir) {
@@ -53,6 +54,9 @@ public class MainActivity extends ActionBarActivity {
     private void initializeViews() {
         listView = (ListView) findViewById(R.id.listView);
         textDir = (TextView) findViewById(R.id.textDir);
+
+        View header = getLayoutInflater().inflate(R.layout.header, null);
+        listView.addHeaderView(header);
     }
 
     private ArrayList<Item> getDir(String pathToParentDir) {

@@ -48,8 +48,8 @@ public class CustomAdapter extends BaseAdapter {
         TextView textTitle = (TextView) layout.findViewById(R.id.textTitleFolder);
         textTitle.setText(item.getTitulo());
 
-        TextView textDateModify = (TextView) layout.findViewById(R.id.textDateModify);
-        textDateModify.setText(item.getDataModificacao());
+//        TextView textDateModify = (TextView) layout.findViewById(R.id.textDateModify);
+//        textDateModify.setText(item.getDataModificacao());
 
         return layout;
     }
