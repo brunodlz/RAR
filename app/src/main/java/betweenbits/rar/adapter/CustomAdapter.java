@@ -1,4 +1,4 @@
-package betweenbits.rar;
+package betweenbits.rar.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import betweenbits.rar.domain.Item;
+import betweenbits.rar.R;
 
 /**
  * Created by bruno v0id on 7/6/15.

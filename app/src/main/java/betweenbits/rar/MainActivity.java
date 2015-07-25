@@ -12,20 +12,25 @@ import android.widget.TextView;
 import java.io.File;
 import java.util.ArrayList;
 
+import betweenbits.rar.adapter.CustomAdapter;
+import betweenbits.rar.domain.Item;
+import betweenbits.rar.util.Storage;
+
 public class MainActivity extends ActionBarActivity {
 
     private File parentDir = null;
-    private File[] listOfDir = null;
 
     private ListView listView = null;
     private TextView textDir = null;
 
-    private String dir = "/sdcard/";
+    private String directory = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        directory = Storage.getPath();
 
         initializeViews();
         loadingList();
@@ -34,15 +39,15 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String[] fileNames = parentDir.list();
-                dir = parentDir.getPath() + "/" + fileNames[position];
+                directory = parentDir.getPath() + "/" + fileNames[position];
                 loadingList();
             }
         });
     }
 
     private void loadingList() {
-        ArrayList<Item> list = getDir(dir);
-        setListView(list, dir);
+        ArrayList<Item> list = getDir(directory);
+        setListView(list, directory);
 
     }
 
@@ -62,7 +67,7 @@ public class MainActivity extends ActionBarActivity {
     private ArrayList<Item> getDir(String pathToParentDir) {
         ArrayList<Item> inFiles = new ArrayList<Item>();
 
-        parentDir = new File(dir);
+        parentDir = new File(directory);
         String[] fileNames = parentDir.list();
 
         for (String fileName : fileNames) {
@@ -102,7 +107,5 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
-
     }
 }

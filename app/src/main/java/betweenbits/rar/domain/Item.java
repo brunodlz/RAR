@@ -1,4 +1,4 @@
-package betweenbits.rar;
+package betweenbits.rar.domain;
 
 /**
  * Created by bruno v0id on 7/6/15.
